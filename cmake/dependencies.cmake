@@ -1,6 +1,6 @@
 set(DEPENDENCIES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
 
-# ------------------- BHW
+# ------------------- BHW -------------------
 
 add_subdirectory(${DEPENDENCIES_DIR}/BoilingHotWater)
 

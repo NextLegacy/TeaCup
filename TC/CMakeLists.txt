@@ -14,7 +14,7 @@ target_link_libraries(TeaCup
     glm::glm
     glew
     imgui
-    BHW::BHW
+    BoilingHotWater::BoilingHotWater
 )
 
 add_library(TeaCup::TeaCup ALIAS TeaCup)

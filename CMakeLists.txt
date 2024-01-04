@@ -6,7 +6,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/install)
 
-project(TC VERSION 0.0.1 LANGUAGES CXX)
+project(TeaCup VERSION 0.0.1 LANGUAGES CXX)
 
 include(cmake/dependencies.cmake)
 add_subdirectory(TC)
@@ -27,9 +27,10 @@ install(TARGETS TeaCup
 )
 
 install(
-    DIRECTORY TeaCup
+    DIRECTORY TC
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     PATTERN "CMakeLists.txt" EXCLUDE
+    PATTERN "*.cpp" EXCLUDE
 )
 
 install(
