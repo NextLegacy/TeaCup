@@ -2,9 +2,7 @@ set(DEPENDENCIES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
 
 # ------------------- BHW
 
-list(APPEND CMAKE_PREFIX_PATH ${DEPENDENCIES_DIR}/BoilingHotWater/install)
-
-find_package(BHW REQUIRED)
+add_subdirectory(${DEPENDENCIES_DIR}/BoilingHotWater)
 
 # ------------------- OpenGL -------------------
 

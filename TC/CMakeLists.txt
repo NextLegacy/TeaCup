@@ -1,14 +1,14 @@
-file(GLOB_RECURSE TCSources *.cpp)
-file(GLOB_RECURSE TCHeaders *.hpp)
+file(GLOB_RECURSE TeaCupSources *.cpp)
+file(GLOB_RECURSE TeaCupHeaders *.hpp)
 
-add_library(TC STATIC ${TCSources} ${TCHeaders})
+add_library(TeaCup STATIC ${TeaCupSources} ${TeaCupHeaders})
 
-target_include_directories(TC PUBLIC 
+target_include_directories(TeaCup PUBLIC 
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(TC
+target_link_libraries(TeaCup
     OpenGL::GL
     glfw
     glm::glm
@@ -17,4 +17,4 @@ target_link_libraries(TC
     BHW::BHW
 )
 
-add_library(TC::TC ALIAS TC)
+add_library(TeaCup::TeaCup ALIAS TeaCup)

@@ -15,39 +15,39 @@ include(GNUInstallDirs)
 include(CPack)
 
 install(TARGETS glm-header-only glm glew imgui
-    EXPORT TC
+    EXPORT TeaCup
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
-install(TARGETS TC
-    EXPORT TC
+install(TARGETS TeaCup
+    EXPORT TeaCup
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
 install(
-    DIRECTORY TC
+    DIRECTORY TeaCup
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     PATTERN "CMakeLists.txt" EXCLUDE
 )
 
 install(
-    EXPORT TC
-    NAMESPACE TC::
-    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/TC
-    FILE TCConfig.cmake
+    EXPORT TeaCup
+    NAMESPACE TeaCup::
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/TeaCup
+    FILE TeaCupConfig.cmake
 )
 
 include(CMakePackageConfigHelpers)
 
 write_basic_package_version_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/TCConfigVersion.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/TeaCupConfigVersion.cmake
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY AnyNewerVersion
 )
 
 install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/TCConfigVersion.cmake
-    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/TC
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/TeaCupConfigVersion.cmake
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/TeaCup
 )
