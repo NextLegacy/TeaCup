@@ -2,7 +2,9 @@ set(DEPENDENCIES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
 
 # ------------------- BHW -------------------
 
-add_subdirectory(${DEPENDENCIES_DIR}/BoilingHotWater)
+if (NOT TARGET BoilingHotWater::BoilingHotWater)
+    add_subdirectory(${DEPENDENCIES_DIR}/BoilingHotWater)
+endif()
 
 # ------------------- OpenGL -------------------
 
