@@ -7,7 +7,7 @@
 
 #include "TC/gapi/GAPI.hpp"
 #include "TC/TeaCupRuntime.hpp"
-#include "TC/TeaCupBaseEventSystem.hpp"
+#include "TC/EventSubscriber.hpp"
 
 namespace TC
 {
