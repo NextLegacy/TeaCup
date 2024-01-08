@@ -3,7 +3,7 @@
 namespace TC
 {
     template <typename TApplication>
-    struct TeaCupBaseEvent
+    struct EventSubscriber
     {
         inline virtual void Start      (TApplication& application) { }
 
