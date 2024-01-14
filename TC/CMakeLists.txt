@@ -14,6 +14,7 @@ target_link_libraries(TeaCup
     glm::glm
     glew
     imgui
+    implot
     BoilingHotWater::BoilingHotWater
 )
 

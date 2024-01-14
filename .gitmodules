@@ -11,3 +11,6 @@
 [submodule "dependencies/glm"]
 	path = dependencies/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "dependencies/implot"]
+	path = dependencies/implot
+	url = https://github.com/epezent/implot.git

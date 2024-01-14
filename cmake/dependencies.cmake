@@ -71,3 +71,21 @@ target_include_directories(imgui PUBLIC
 )
 
 target_link_libraries(imgui PUBLIC glfw)
+
+# ------------------- IMPLOT -------------------
+
+set(IMPLOT_FILES
+    ${DEPENDENCIES_DIR}/implot/implot.cpp
+    ${DEPENDENCIES_DIR}/implot/implot.h
+    ${DEPENDENCIES_DIR}/implot/implot_internal.h
+    ${DEPENDENCIES_DIR}/implot/implot_items.cpp
+)
+
+add_library(implot STATIC ${IMPLOT_FILES})
+
+target_include_directories(implot PUBLIC 
+    $<BUILD_INTERFACE:${DEPENDENCIES_DIR}/implot>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(implot PUBLIC imgui)

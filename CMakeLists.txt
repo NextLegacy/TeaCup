@@ -14,7 +14,7 @@ add_subdirectory(TC)
 include(GNUInstallDirs)
 include(CPack)
 
-install(TARGETS glm-header-only glm glew imgui
+install(TARGETS glm-header-only glm glew imgui implot
     EXPORT TeaCup
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
