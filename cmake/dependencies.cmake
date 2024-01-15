@@ -24,9 +24,34 @@ target_include_directories(glew INTERFACE
     $<INSTALL_INTERFACE:include>
 )
 
+install(TARGETS glew EXPORT glewTargets)
+
+install(EXPORT glewTargets
+    FILE glewTargets.cmake
+    NAMESPACE glew::
+    DESTINATION lib/cmake/glew
+)
+
+install(FILES ${GLEW_FILES} DESTINATION include/GL)
+
 # ------------------- GLM -------------------
 
 add_subdirectory(${DEPENDENCIES_DIR}/glm)
+
+install(TARGETS glm glm-header-only
+    EXPORT glmTargets
+    DESTINATION lib
+)
+
+install(EXPORT glmTargets
+    FILE glmTargets.cmake
+    NAMESPACE glm::
+    DESTINATION lib/cmake/glm
+)
+
+install(DIRECTORY ${DEPENDENCIES_DIR}/glm/glm
+    DESTINATION include
+)
 
 # ------------------- GLFW -------------------
 
@@ -72,6 +97,20 @@ target_include_directories(imgui PUBLIC
 
 target_link_libraries(imgui PUBLIC glfw)
 
+install(TARGETS imgui
+    EXPORT imguiTargets
+    DESTINATION lib
+)
+
+install(EXPORT imguiTargets
+    FILE imguiTargets.cmake
+    NAMESPACE imgui::
+    DESTINATION lib/cmake/imgui
+)
+
+install(FILES ${IMGUI_HEADERS} DESTINATION include)
+
+
 # ------------------- IMPLOT -------------------
 
 set(IMPLOT_FILES
@@ -89,3 +128,16 @@ target_include_directories(implot PUBLIC
 )
 
 target_link_libraries(implot PUBLIC imgui)
+
+install(TARGETS imgui
+    EXPORT implotTargets
+    DESTINATION lib
+)
+
+install(EXPORT implotTargets
+    FILE implotTargets.cmake
+    NAMESPACE implot::
+    DESTINATION lib/cmake/implot
+)
+
+install(FILES ${IMPLOT_FILES} DESTINATION include)
