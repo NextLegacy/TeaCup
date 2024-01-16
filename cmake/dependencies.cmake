@@ -108,7 +108,7 @@ install(EXPORT imguiTargets
     DESTINATION lib/cmake/imgui
 )
 
-install(FILES ${IMGUI_HEADERS} DESTINATION include)
+install(FILES ${IMGUI_HEADERS} ${IMGUI_BACKEND_HEADERS} DESTINATION include)
 
 
 # ------------------- IMPLOT -------------------
