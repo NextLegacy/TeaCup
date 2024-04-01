@@ -15,6 +15,7 @@ target_link_libraries(TeaCup PUBLIC
     Threads::Threads
     glm::glm
     imgui
+    implot
     BoilingHotWater::BoilingHotWater
     glew
 )

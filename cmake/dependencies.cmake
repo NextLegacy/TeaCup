@@ -32,6 +32,21 @@ set(GLM_BUILD_INSTALL ON CACHE BOOL "" FORCE)
 
 add_subdirectory(${DEPENDENCIES_DIR}/glm)
 
+install(TARGETS glm glm-header-only
+    EXPORT glmTargets
+    DESTINATION lib
+)
+
+install(EXPORT glmTargets
+    FILE glmTargets.cmake
+    NAMESPACE glm::
+    DESTINATION lib/cmake/glm
+)
+
+install(DIRECTORY ${DEPENDENCIES_DIR}/glm/glm
+    DESTINATION include
+)
+
 # ------------------- GLFW -------------------
 
 set(GLFW_BUILD_DOCS     OFF CACHE BOOL "" FORCE)
@@ -82,3 +97,23 @@ target_include_directories(imgui PUBLIC
 
 install(FILES ${IMGUI_HEADERS} DESTINATION include)
 install(FILES ${IMGUI_BACKEND_HEADERS} DESTINATION include)
+
+# ------------------- IMPLOT -------------------
+
+set(IMPLOT_FILES
+    ${DEPENDENCIES_DIR}/implot/implot.cpp
+    ${DEPENDENCIES_DIR}/implot/implot.h
+    ${DEPENDENCIES_DIR}/implot/implot_internal.h
+    ${DEPENDENCIES_DIR}/implot/implot_items.cpp
+)
+
+add_library(implot STATIC ${IMPLOT_FILES})
+
+target_include_directories(implot PUBLIC 
+    $<BUILD_INTERFACE:${DEPENDENCIES_DIR}/implot>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(implot PUBLIC imgui)
+
+install(FILES ${IMPLOT_FILES} DESTINATION include)
