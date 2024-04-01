@@ -53,6 +53,10 @@ namespace TC
         inline virtual void InitializeFrameThread() override
         {
             glfwMakeContextCurrent(m_window);
+
+            if (glewInit() != GLEW_OK)
+                BHW::Console::WriteLine("Error: GLEW failed to initialize!");
+
             //InitializeInput();
 
             glfwSwapInterval(1);

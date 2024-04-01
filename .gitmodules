@@ -2,9 +2,6 @@
 	path = dependencies/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = docking
-[submodule "dependencies/BoilingHotWater"]
-	path = dependencies/BoilingHotWater
-	url = https://github.com/NextLegacy/BoilingHotWater.git
 [submodule "dependencies/glfw"]
 	path = dependencies/glfw
 	url = https://github.com/glfw/glfw.git

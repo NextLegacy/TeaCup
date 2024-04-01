@@ -2,9 +2,7 @@ set(DEPENDENCIES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
 
 # ------------------- BHW -------------------
 
-if (NOT TARGET BoilingHotWater::BoilingHotWater)
-    add_subdirectory(${DEPENDENCIES_DIR}/BoilingHotWater)
-endif()
+find_package(BoilingHotWater REQUIRED)
 
 # ------------------- OpenGL -------------------
 
@@ -12,19 +10,25 @@ find_package(OpenGL REQUIRED)
 
 # ------------------- GLEW -------------------
 
-set(GLEW_INCLUDE_DIR ${DEPENDENCIES_DIR}/glew-2.2.0/include)
-set(GLEW_LIB_DIR ${DEPENDENCIES_DIR}/glew-2.2.0/lib/Release/Win32)
+set(GLEW_DIR ${DEPENDENCIES_DIR}/glew-2.2.0)
+set(GLEW_INCLUDE_DIR ${GLEW_DIR}/include)
+set(GLEW_SOURCE_DIR ${GLEW_DIR}/src)
 
 file(GLOB_RECURSE GLEW_FILES ${GLEW_INCLUDE_DIR}/GL/*.h)
+file(GLOB_RECURSE GLEW_SOURCES ${GLEW_SOURCE_DIR}/*.c)
 
-add_library(glew INTERFACE ${GLEW_FILES})
+add_library(glew STATIC ${GLEW_FILES} ${GLEW_SOURCES})
 
-target_include_directories(glew INTERFACE 
+target_include_directories(glew PUBLIC
     $<BUILD_INTERFACE:${GLEW_INCLUDE_DIR}>
     $<INSTALL_INTERFACE:include>
 )
 
+install(FILES ${GLEW_FILES} DESTINATION include/GL)
+
 # ------------------- GLM -------------------
+
+set(GLM_BUILD_INSTALL ON CACHE BOOL "" FORCE)
 
 add_subdirectory(${DEPENDENCIES_DIR}/glm)
 
@@ -34,7 +38,13 @@ set(GLFW_BUILD_DOCS     OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
+set(GLFW_INSTALL        OFF CACHE BOOL "" FORCE)
+
+find_package(Threads REQUIRED)
+
 add_subdirectory(${DEPENDENCIES_DIR}/glfw)
+
+install(DIRECTORY ${DEPENDENCIES_DIR}/glfw/include/GLFW DESTINATION include)
 
 # ------------------- IMGUI -------------------
 
@@ -70,4 +80,5 @@ target_include_directories(imgui PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(imgui PUBLIC glfw)
+install(FILES ${IMGUI_HEADERS} DESTINATION include)
+install(FILES ${IMGUI_BACKEND_HEADERS} DESTINATION include)
