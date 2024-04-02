@@ -114,6 +114,4 @@ target_include_directories(implot PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(implot PUBLIC imgui)
-
 install(FILES ${IMPLOT_FILES} DESTINATION include)
