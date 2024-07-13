@@ -95,6 +95,12 @@ target_include_directories(imgui PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
+target_link_libraries(imgui PUBLIC
+    OpenGL::GL
+    glfw
+    Threads::Threads
+)
+
 install(FILES ${IMGUI_HEADERS} DESTINATION include)
 install(FILES ${IMGUI_BACKEND_HEADERS} DESTINATION include)
 
@@ -112,6 +118,14 @@ add_library(implot STATIC ${IMPLOT_FILES})
 target_include_directories(implot PUBLIC 
     $<BUILD_INTERFACE:${DEPENDENCIES_DIR}/implot>
     $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(implot PUBLIC imgui
+    $<BUILD_INTERFACE:glew>
+    $<INSTALL_INTERFACE:glew>
+    OpenGL::GL
+    glfw
+    Threads::Threads
 )
 
 install(FILES ${IMPLOT_FILES} DESTINATION include)
