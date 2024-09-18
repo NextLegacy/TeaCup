@@ -35,6 +35,9 @@ namespace TC
 
         virtual void SetTitle(const std::string& title) override;
         virtual void SetSize (const glm::ivec2&  size ) override;
+        virtual void SetPosition(const glm::ivec2& position) override;
+        virtual void SetFullscreen(bool fullscreen) override;
+        virtual void MakeCentered() override;
 
         virtual void SetWindowHints() = 0;
 

@@ -39,7 +39,7 @@ namespace TC
 
         void SetPosition(int x, int y);
 
-        friend class Input;
+        friend class InputAdapter;
 
     private:
         glm::vec2 m_position;

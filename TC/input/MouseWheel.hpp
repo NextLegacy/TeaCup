@@ -16,7 +16,7 @@ namespace TC
     private:
         void SetDelta(double x, double y);
 
-        friend class Input;
+        friend class InputAdapter;
 
     private:
         glm::vec2 m_delta;

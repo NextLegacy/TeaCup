@@ -14,7 +14,11 @@ namespace TC
 
         SetWindowHints();
 
+        //GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+
         m_window = glfwCreateWindow(m_size.x, m_size.y, "TeaCup", nullptr, nullptr);
+
+        MakeCentered();
 
         if (m_window == nullptr)
             return 1;
@@ -24,43 +28,38 @@ namespace TC
 
     void GLFW::InitializeInput()
     {
-        glfwSetWindowUserPointer(m_window, this);
+        glfwSetWindowUserPointer(m_window, &this->m_inputAdapter);
 
         glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
         {
-            GLFW& glfw = *static_cast<GLFW*>(glfwGetWindowUserPointer(window));
-            Input& input = glfw.GetInput();
-
-            input.KeyboardKeyCallback(key, scancode, action, mods);
+            InputAdapter& inputAdapter = *static_cast<InputAdapter*>(glfwGetWindowUserPointer(window));
+            inputAdapter.KeyboardKey(key, scancode, action, mods);
         });
 
         glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int button, int action, int mods)
         {
-            GLFW& glfw = *static_cast<GLFW*>(glfwGetWindowUserPointer(window));
-            Input& input = glfw.GetInput();
+            InputAdapter& inputAdapter = *static_cast<InputAdapter*>(glfwGetWindowUserPointer(window));
 
-            input.MouseButtonCallback(button, action, mods);
+            inputAdapter.MouseButton(button, action, mods);
         });
 
         glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, double xpos, double ypos)
         {
-            GLFW& glfw = *static_cast<GLFW*>(glfwGetWindowUserPointer(window));
-            Input& input = glfw.GetInput();
+            InputAdapter& inputAdapter = *static_cast<InputAdapter*>(glfwGetWindowUserPointer(window));
 
-            input.MouseMoveCallback(xpos, ypos);
+            inputAdapter.MouseMove(xpos, ypos);
         });
 
         glfwSetScrollCallback(m_window, [](GLFWwindow* window, double xoffset, double yoffset)
         {
-            GLFW& glfw = *static_cast<GLFW*>(glfwGetWindowUserPointer(window));
-            Input& input = glfw.GetInput();
+            InputAdapter& inputAdapter = *static_cast<InputAdapter*>(glfwGetWindowUserPointer(window));
 
-            input.MouseScrollCallback(xoffset, yoffset);
+            inputAdapter.MouseScroll(xoffset, yoffset);
         });
 
         glfwSetWindowRefreshCallback(m_window, [](GLFWwindow* window)
         {
-            GLFW& glfw = *static_cast<GLFW*>(glfwGetWindowUserPointer(window));
+            //GLFW& glfw = *static_cast<GLFW*>(glfwGetWindowUserPointer(window));
 
             //glfwSwapBuffers(glfw.m_window);
             //glfw.RenderFrame();
@@ -75,10 +74,12 @@ namespace TC
     void GLFW::RenderFrame()
     {
         glfwGetFramebufferSize(m_window, &m_size.x, &m_size.y);
+        glfwGetWindowPos(m_window, &m_position.x, &m_position.y);
 
         Frame();
 
         glfwSwapBuffers(m_window);
+        m_inputAdapter.UpdateKeys();
     }
 
     void GLFW::TerminateWindow()
@@ -101,6 +102,51 @@ namespace TC
     {
         m_size = size;
 
+        if (!m_window) return;
+
         glfwSetWindowSize(m_window, m_size.x, m_size.y);
     }
+
+    void GLFW::SetPosition(const glm::ivec2& position)
+    {
+        m_position = position;
+
+        if (!m_window) return;
+
+        glfwSetWindowPos(m_window, position.x, position.y);
+    }
+
+    void GLFW::SetFullscreen(bool fullscreen)
+    {
+        m_fullscreen = fullscreen;
+        if (!m_window) return;
+
+        if (!fullscreen)
+        {
+            glfwSetWindowMonitor(m_window, nullptr, m_position_before_fullscreen.x, m_position_before_fullscreen.y, m_size_before_fullscreen.x, m_size_before_fullscreen.y, 0);
+
+            return;
+        }
+
+        m_size_before_fullscreen = m_size;
+        m_position_before_fullscreen = m_position;
+
+        GLFWmonitor*       monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode    = glfwGetVideoMode(monitor);
+
+        glfwWindowHint(GLFW_RED_BITS    , mode->redBits    );
+        glfwWindowHint(GLFW_GREEN_BITS  , mode->greenBits  );
+        glfwWindowHint(GLFW_BLUE_BITS   , mode->blueBits   );
+        glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+        
+        glfwSetWindowMonitor(m_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+    }
+
+    void GLFW::MakeCentered()
+    {
+        const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+        SetPosition(glm::ivec2((mode->width - m_size.x) / 2, (mode->height - m_size.y) / 2));
+    }
+    
 }

@@ -57,7 +57,7 @@ namespace TC
             if (glewInit() != GLEW_OK)
                 BHW::Console::WriteLine("Error: GLEW failed to initialize!");
 
-            //InitializeInput();
+            InitializeInput();
 
             glfwSwapInterval(1);
 
@@ -94,7 +94,6 @@ namespace TC
             }
 
             glfwSwapBuffers(m_window);
-            
         }
 
         inline virtual void TerminateWindow() override
@@ -109,6 +108,7 @@ namespace TC
 
         inline virtual void ProcessEvents() override
         {
+            m_inputAdapter.UpdateKeys();
             glfwWaitEvents();
         }
 

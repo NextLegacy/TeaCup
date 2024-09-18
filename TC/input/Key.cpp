@@ -2,7 +2,7 @@
 
 namespace TC
 {
-    Key::Key() : m_action(ActionCode::Release)
+    Key::Key() : m_action(ActionCode::Release), m_thisFrame(false)
     {
     }
 }

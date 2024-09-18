@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28.1)
+cmake_minimum_required(VERSION 3.30.3)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -10,6 +10,14 @@ project(TeaCup VERSION 0.0.1 LANGUAGES CXX)
 
 include(cmake/dependencies.cmake)
 add_subdirectory(TC)
+
+include(InstallRequiredSystemLibraries)
+set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/License.txt)
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_GENERATOR WIX)
+set(CPACK_WIX_VERSION 4)
+set(CPACK_WIX_UPGRADE_GUID "62350DD9-4ECD-4DFD-95B5-0962B1BEAEFC")
 
 include(GNUInstallDirs)
 include(CPack)

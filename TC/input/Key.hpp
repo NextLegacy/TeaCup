@@ -19,12 +19,19 @@ namespace TC
         inline bool Released() const { return m_action == ActionCode::Release; }
         inline bool Repeated() const { return m_action == ActionCode::Repeat ; }
 
+        inline bool PressedThisFrame () const { return Pressed () && ThisFrame(); }
+        inline bool ReleasedThisFrame() const { return Released() && ThisFrame(); }
+        inline bool RepeatedThisFrame() const { return Repeated() && ThisFrame(); }
+
+        inline bool ThisFrame() const { return m_thisFrame; }
+
     private:
-        friend class Input;
+        friend class InputAdapter;
 
         inline void SetAction(ActionCode action) { m_action = action; }
 
     private:
         ActionCode m_action;
+        bool m_thisFrame;
     };
 }
